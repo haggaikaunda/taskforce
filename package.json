@@ -5,6 +5,10 @@
   "main": "index.js",
   "author": "hkaunda",
   "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
   "devDependencies": {
     "nodemon": "^2.0.6"
   },
@@ -12,6 +16,7 @@
     "apollo-datasource-mongodb": "^0.2.8",
     "apollo-server": "^2.19.0",
     "graphql": "^15.4.0",
-    "mongoose": "^5.10.15"
+    "mongoose": "^5.10.15",
+    "mongoose-autopopulate": "^0.12.3"
   }
 }
