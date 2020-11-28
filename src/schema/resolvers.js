@@ -32,6 +32,14 @@ module.exports = {
       // failed to create the note, short circult.
       return noteCreateResult;
     },
+    // Mutation.toggleTaskCompletion
+    toogleTaskCompletion: (
+      _,
+      { id, isCompleted },
+      { dataSources: { tasks } }
+    ) => tasks.toogleTaskCompletion({ id, isCompleted }),
+
+    // perhaps we don't need this??
     addNoteToTask: (_, { taskId, noteId }, { dataSources: { tasks } }) =>
       tasks.addNoteToTask({ taskId, noteId }),
 

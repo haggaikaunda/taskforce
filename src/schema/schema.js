@@ -27,7 +27,7 @@ const typeDefs = gql`
     deleteNote(id: ID): Boolean!
     deleteAllNotes: Boolean!
     editTask(id: ID, newName: String, isCompleted: Boolean): TaskUpdateResponse!
-    toogleTaskCompletion(id: ID, isCompleted: Boolean): TaskUpdateResponse!
+    toogleTaskCompletion(id: ID, isCompleted: Boolean): Task!
     createNote(taskId: ID!, description: String!): NoteUpdateResponse
     addNoteToTask(taskId: ID!, noteId: ID!): TaskUpdateResponse!
   }

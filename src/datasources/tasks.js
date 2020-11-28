@@ -9,11 +9,11 @@ class Task extends MongoDataSource {
     return this.model.find({});
   }
 
-  async createTask(name, isComplete) {
+  async createTask(name, isCompleted) {
     try {
       const task = await this.model.create({
         name: name,
-        isComplete: isComplete,
+        isCompleted: isCompleted,
       });
       return { success: true, task: task };
     } catch (err) {
@@ -60,17 +60,18 @@ class Task extends MongoDataSource {
     }
   }
 
-  // processUpdateTaskResult(updatedTask) {
-  //   console.log(`processing updatedTask ${updatedTask}`);
-  //   if (updatedTask) {
-  //     const updatedNotes = updatedTask.notes.map((note) => {
-  //       return { ...note, id: note._id };
-  //     });
-  //     return { ...updatedTask, notes: updatedNotes, id: updatedTask._id };
-  //   } else {
-  //     return updatedTask;
-  //   }
-  // }
+  async toogleTaskCompletion({ id, isCompleted }) {
+    try {
+      const updatedTask = await this.model.findByIdAndUpdate(
+        { _id: id },
+        { isCompleted },
+        { new: true }
+      );
+      return updatedTask;
+    } catch (err) {
+      console.log("error updating task", err);
+    }
+  }
 }
 
 module.exports = Task;
