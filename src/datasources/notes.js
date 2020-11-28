@@ -1,8 +1,8 @@
 const { MongoDataSource } = require("apollo-datasource-mongodb");
 
 class Note extends MongoDataSource {
-  getNote(taskId) {
-    return this.findOneById(taskId);
+  getNote(noteId) {
+    return this.findOneById(noteId);
   }
 
   getAllNotes() {
@@ -13,12 +13,31 @@ class Note extends MongoDataSource {
     return this.findManyByIds(noteIds);
   }
 
-  createNote(taskId, description) {
+  async deleteAllNotes() {
+    await this.model.deleteMany({}, (err) => {
+      if (err) {
+        console.log("err deleting notes", err);
+      }
+    });
+    return true;
+  }
+
+  async createNote(taskId, description) {
     try {
-      const note = this.model.create({ description, task: taskId });
-      return { success: true, note: note };
+      const note = await this.model.create({ description, task: taskId });
+      return { success: true, id: note._id };
     } catch (err) {
       return { success: false, message: err.message };
+    }
+  }
+
+  async deleteNote(id) {
+    try {
+      await this.model.findByIdAndDelete(id);
+      return true;
+    } catch (err) {
+      console.log(`failed to delete note with id [${id}], got error: ${err}`);
+      return false;
     }
   }
 }

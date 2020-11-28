@@ -28,12 +28,10 @@ class Task extends MongoDataSource {
       return res;
     };
 
-    await this.model.deleteOne({ _id: id }, (error, success) => {
+    await this.model.findByIdAndDelete(id, (error, success) => {
       if (error) {
-        console.log("error", error);
         return _setResponse({ succes: false, message: error.message });
       } else {
-        console.log("success", success);
         if (success.deleteCount) {
           return _setResponse({ success: true });
         } else {
@@ -50,23 +48,29 @@ class Task extends MongoDataSource {
 
   async addNoteToTask({ taskId, noteId }) {
     try {
-      const updatedTask = this.model.findOneAndUpdate(
+      const updatedTask = await this.model.findByIdAndUpdate(
         { _id: taskId },
         { $push: { notes: noteId } },
-        (error, success) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log(success);
-          }
-        }
+        { new: true }
       );
-
+      console.log("updatedTask", updatedTask);
       return { success: true, task: updatedTask };
     } catch (err) {
       return { success: false, message: err.message };
     }
   }
+
+  // processUpdateTaskResult(updatedTask) {
+  //   console.log(`processing updatedTask ${updatedTask}`);
+  //   if (updatedTask) {
+  //     const updatedNotes = updatedTask.notes.map((note) => {
+  //       return { ...note, id: note._id };
+  //     });
+  //     return { ...updatedTask, notes: updatedNotes, id: updatedTask._id };
+  //   } else {
+  //     return updatedTask;
+  //   }
+  // }
 }
 
 module.exports = Task;

@@ -14,6 +14,7 @@ const mongoUri =
 mongo.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 
 mongo.connection.once("open", () => {

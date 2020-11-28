@@ -12,7 +12,7 @@ const typeDefs = gql`
   type Note {
     id: ID!
     description: String!
-    task: Task!
+    task: Task
   }
 
   type Query {
@@ -22,11 +22,13 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createTask(name: String!, isCompleted: Boolean!): TaskUpdateResponse!
+    createTask(name: String!, isCompleted: Boolean = false): TaskUpdateResponse!
     deleteTask(id: ID): TaskUpdateResponse!
+    deleteNote(id: ID): Boolean!
+    deleteAllNotes: Boolean!
     editTask(id: ID, newName: String, isCompleted: Boolean): TaskUpdateResponse!
     toogleTaskCompletion(id: ID, isCompleted: Boolean): TaskUpdateResponse!
-    createNote(taskId: ID!, description: String!): NoteUpdateResponse!
+    createNote(taskId: ID!, description: String!): NoteUpdateResponse
     addNoteToTask(taskId: ID!, noteId: ID!): TaskUpdateResponse!
   }
 
