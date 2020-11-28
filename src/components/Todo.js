@@ -1,19 +1,25 @@
 import React, { useState } from "react";
+import { gql, useMutation } from "@apollo/client";
 
-export default function Todo({
-  id,
-  name,
-  completed,
-  toggleTaskCompleted,
-  editTask,
-  deleteTask,
-}) {
+const TOGGLE_TASK_COMPLETED = gql`
+  mutation ToggleTaskCompletion($id: ID!, $isCompleted: Boolean!) {
+    toogleTaskCompletion(id: $id, isCompleted: $isCompleted) {
+      id
+      isCompleted
+    }
+  }
+`;
+
+export default function Todo({ id, name, completed, editTask, deleteTask }) {
+  // Apollo will automatically udate the global cache for single value changes.
+  const [toggleTaskCompleted] = useMutation(TOGGLE_TASK_COMPLETED);
+
   const [isEditing, setEditing] = useState(false);
   const [newName, setNewName] = useState(name);
 
   /**
    * handles name change on the editing template.
-   * @param {*} e event that intiated the callback.
+   * @param e event that intiated the callback.
    */
   function handleChange(e) {
     setNewName(e.target.value);
@@ -71,7 +77,9 @@ export default function Todo({
           id={id}
           type="checkbox"
           defaultChecked={completed}
-          onChange={() => toggleTaskCompleted(id)}
+          onChange={() =>
+            toggleTaskCompleted({ variables: { id, isCompleted: !completed } })
+          }
         />
         <label className="todo-label" htmlFor={id}>
           {name}

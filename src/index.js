@@ -1,7 +1,14 @@
+import { ApolloClient, ApolloProvider } from "@apollo/client";
+import { cache } from "./cache";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+
+const client = new ApolloClient({
+  cache,
+  uri: "http://localhost:4000/graphql",
+});
 
 const DATA = [
   { id: "todo-0", name: "Eat", completed: true },
@@ -9,4 +16,9 @@ const DATA = [
   { id: "todo-2", name: "Repeat", completed: false },
 ];
 
-ReactDOM.render(<App tasks={DATA} />, document.getElementById("root"));
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <App tasks={DATA} />
+  </ApolloProvider>,
+  document.getElementById("root")
+);
