@@ -10,15 +10,9 @@ const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
 });
 
-const DATA = [
-  { id: "todo-0", name: "Eat", completed: true },
-  { id: "todo-1", name: "Sleep", completed: false },
-  { id: "todo-2", name: "Repeat", completed: false },
-];
-
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App tasks={DATA} />
+    <App />
   </ApolloProvider>,
   document.getElementById("root")
 );
