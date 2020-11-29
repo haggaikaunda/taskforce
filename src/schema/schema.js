@@ -23,11 +23,10 @@ const typeDefs = gql`
 
   type Mutation {
     createTask(name: String!, isCompleted: Boolean = false): TaskUpdateResponse!
-    deleteTask(id: ID): TaskUpdateResponse!
+    deleteTask(id: ID): Task
     deleteNote(id: ID): Boolean!
     deleteAllNotes: Boolean!
-    editTask(id: ID, newName: String, isCompleted: Boolean): TaskUpdateResponse!
-    toogleTaskCompletion(id: ID, isCompleted: Boolean): Task!
+    editTask(id: ID, name: String, isCompleted: Boolean): Task
     createNote(taskId: ID!, description: String!): NoteUpdateResponse
     addNoteToTask(taskId: ID!, noteId: ID!): TaskUpdateResponse!
   }

@@ -22,28 +22,13 @@ class Task extends MongoDataSource {
   }
 
   async deleteTask(id) {
-    let res;
-    const _setResponse = (response) => {
-      res = response;
-      return res;
-    };
-
-    await this.model.findByIdAndDelete(id, (error, success) => {
-      if (error) {
-        return _setResponse({ succes: false, message: error.message });
-      } else {
-        if (success.deleteCount) {
-          return _setResponse({ success: true });
-        } else {
-          return _setResponse({
-            success: false,
-            message: `task with id ${id} doesn't exist`,
-          });
-        }
-      }
-    });
-
-    return res;
+    try {
+      const deleteResult = await this.model.findByIdAndDelete(id);
+      return { id: deleteResult._id };
+    } catch (err) {
+      console.log(`error while deleting task [${id}]`, err.message);
+      return;
+    }
   }
 
   async addNoteToTask({ taskId, noteId }) {
@@ -57,6 +42,26 @@ class Task extends MongoDataSource {
       return { success: true, task: updatedTask };
     } catch (err) {
       return { success: false, message: err.message };
+    }
+  }
+
+  async editTask({ id, fields }) {
+    const fieldsToUpdate = Object.fromEntries(
+      // filter out undefined/null keys, this represents fields that weren't passed for editing.
+      Object.entries(fields).filter((field) => {
+        const value = field[1];
+        return !(value === null || value === undefined);
+      })
+    );
+    try {
+      const updatedTask = await this.model.findByIdAndUpdate(
+        { _id: id },
+        { ...fieldsToUpdate },
+        { new: true }
+      );
+      return updatedTask;
+    } catch (err) {
+      console.log("error udpating task", err);
     }
   }
 

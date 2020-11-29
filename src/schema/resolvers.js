@@ -9,7 +9,12 @@ module.exports = {
     createTask: (_, { name, isCompleted }, { dataSources: { tasks } }) => {
       return tasks.createTask(name, isCompleted);
     },
-    deleteTask: (_, { id }, { dataSources: { tasks } }) => tasks.deleteTask(id),
+    deleteTask: async (_, { id }, { dataSources: { tasks } }) =>
+      await tasks.deleteTask(id),
+
+    editTask: (_, { id, name, isCompleted }, { dataSources: { tasks } }) =>
+      tasks.editTask({ id, fields: { name, isCompleted } }),
+
     createNote: async (
       _,
       { taskId, description },
@@ -32,12 +37,6 @@ module.exports = {
       // failed to create the note, short circult.
       return noteCreateResult;
     },
-    // Mutation.toggleTaskCompletion
-    toogleTaskCompletion: (
-      _,
-      { id, isCompleted },
-      { dataSources: { tasks } }
-    ) => tasks.toogleTaskCompletion({ id, isCompleted }),
 
     // perhaps we don't need this??
     addNoteToTask: (_, { taskId, noteId }, { dataSources: { tasks } }) =>
