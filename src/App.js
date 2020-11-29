@@ -30,34 +30,6 @@ function App() {
   // const [tasks, setTasks] = useState(props.tasks);
   console.log("data?.tasks", data?.tasks);
 
-  function toggleTaskCompleted(id) {
-    // const updatedTasks = tasks.map((task) => {
-    //   if (task.id === id) {
-    //     return { ...task, completed: !task.completed };
-    //   } else {
-    //     return task;
-    //   }
-    // });
-    // console.log(updatedTasks[0]);
-    // setTasks(updatedTasks);
-  }
-
-  function deleteTask(id) {
-    // const remainingTasks = tasks.filter((task) => task.id !== id);
-    // setTasks(remainingTasks);
-  }
-
-  function editTask(id, newName) {
-    // const editedTaskList = tasks.map((task) => {
-    //   if (id === task.id) {
-    //     return { ...task, name: newName };
-    //   } else {
-    //     return task;
-    //   }
-    // });
-    // setTasks(editedTaskList);
-  }
-
   if (loading) return <p>Loading</p>;
   if (error) return <p>ERROR: {error}</p>;
   if (!data) return <p>Not Found</p>;
@@ -93,9 +65,6 @@ function App() {
             id={task.id}
             name={task.name}
             completed={task.isCompleted}
-            toggleTaskCompleted={toggleTaskCompleted}
-            editTask={editTask}
-            deleteTask={deleteTask}
           />
         ))}
       </ul>

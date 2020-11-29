@@ -3,16 +3,47 @@ import { gql, useMutation } from "@apollo/client";
 
 const TOGGLE_TASK_COMPLETED = gql`
   mutation ToggleTaskCompletion($id: ID!, $isCompleted: Boolean!) {
-    toogleTaskCompletion(id: $id, isCompleted: $isCompleted) {
+    editTask(id: $id, isCompleted: $isCompleted) {
       id
       isCompleted
     }
   }
 `;
 
-export default function Todo({ id, name, completed, editTask, deleteTask }) {
+const DELETE_TASK = gql`
+  mutation DeleteTask($id: ID!) {
+    deleteTask(id: $id) {
+      id
+    }
+  }
+`;
+
+const EDIT_TASK = gql`
+  mutation EditTask($id: ID!, $name: String) {
+    editTask(id: $id, name: $name) {
+      id
+      isCompleted
+      name
+    }
+  }
+`;
+
+export default function Todo({ id, name, completed }) {
   // Apollo will automatically udate the global cache for single value changes.
   const [toggleTaskCompleted] = useMutation(TOGGLE_TASK_COMPLETED);
+  const [editTask] = useMutation(EDIT_TASK);
+  const [deleteTask] = useMutation(DELETE_TASK, {
+    update(cache, { data: { deleteTask } }) {
+      cache.modify({
+        fields: {
+          id: deleteTask.id,
+          tasks(_, { DELETE }) {
+            return DELETE;
+          },
+        },
+      });
+    },
+  });
 
   const [isEditing, setEditing] = useState(false);
   const [newName, setNewName] = useState(name);
@@ -33,7 +64,7 @@ export default function Todo({ id, name, completed, editTask, deleteTask }) {
     e.preventDefault();
 
     if (newName) {
-      editTask(id, newName);
+      editTask({ variables: { id, name: newName } });
     }
     setNewName("");
     setEditing(false);
@@ -92,7 +123,7 @@ export default function Todo({ id, name, completed, editTask, deleteTask }) {
         <button
           type="button"
           className="btn btn__danger"
-          onClick={() => deleteTask(id)}
+          onClick={() => deleteTask({ variables: { id } })}
         >
           Delete <span className="visually-hidden">{name}</span>
         </button>
