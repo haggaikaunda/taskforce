@@ -4,10 +4,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-
 const client = new ApolloClient({
   cache,
-  uri: "http://localhost:4000/graphql",
+  uri: "https://hkaunda-todo.herokuapp.com/",
 });
 
 ReactDOM.render(

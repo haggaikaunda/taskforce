@@ -28,7 +28,6 @@ const FILTER_NAMES = Object.keys(FILTER_MAP);
 function App() {
   const { data, loading, error } = useQuery(GET_TASKS);
   const [filter, setFilter] = useState("All");
-  console.log("filter", filter);
 
   if (loading) return <p>Loading</p>;
   if (error) return <p>ERROR: {error}</p>;
