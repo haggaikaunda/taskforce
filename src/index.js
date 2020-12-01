@@ -2,8 +2,8 @@ import { ApolloClient, ApolloProvider } from "@apollo/client";
 import { cache } from "./cache";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
+import "bootstrap/dist/css/bootstrap.min.css";
 const client = new ApolloClient({
   cache,
   uri: "https://hkaunda-todo.herokuapp.com/",
