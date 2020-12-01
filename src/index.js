@@ -8,8 +8,8 @@ const Tasks = require("./datasources/tasks");
 const Notes = require("./datasources/notes");
 const resolvers = require("./schema/resolvers");
 
-const mongoUri =
-  "mongodb+srv://admin:e8a92@9knM@cluster0-pxd2k.mongodb.net/graphql?retryWrites=true&w=majority";
+const MongoToken = process.env.MONGO_ACCESS_TOKEN;
+const mongoUri = `mongodb+srv://${MongoToken}?retryWrites=true&w=majority`;
 
 mongo.connect(mongoUri, {
   useNewUrlParser: true,
@@ -34,6 +34,6 @@ const server = new ApolloServer({
   }),
 });
 
-server.listen().then(({ url }) => {
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
   console.log(`Server is running at ${url}`);
 });
