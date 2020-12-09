@@ -3,10 +3,14 @@ import "./boot.css";
 import React, { useState } from "react";
 import Todo from "./newComponents/Todo";
 import Form from "./newComponents/Form";
-import FilterButton from "./components/FilterButton";
+// import FilterButton from "./components/FilterButton";
 import ListGroup from "react-bootstrap/ListGroup";
 
-import { Container } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Spinner from "react-bootstrap/Spinner";
+
+import { Dropdown, DropdownButton, ButtonGroup } from "react-bootstrap";
 
 import { gql, useQuery } from "@apollo/client";
 
@@ -37,7 +41,11 @@ function BootstrapApp() {
 
   let res;
   if (loading) {
-    res = <p>Loading</p>;
+    res = (
+      <Spinner animation="border" role="status" className="loading-animation">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
   } else if (error) {
     res = <p>ERROR: {error}</p>;
   } else if (!data) {
@@ -47,17 +55,44 @@ function BootstrapApp() {
     const tasksNoun = activeTasks.length !== 1 ? "tasks" : "task";
     const headingText = `${activeTasks.length} ${tasksNoun} remaining`;
     res = (
-      <ListGroup as="ul" variant="flush" className="list-group-task">
-        {data.tasks.filter(FILTER_MAP[filter]).map((task, index) => (
-          <Todo
-            key={task.id}
-            id={task.id}
-            name={task.name}
-            completed={task.isCompleted}
-            isLastItem={index === data.tasks.length - 1}
-          />
-        ))}
-      </ListGroup>
+      <Card border="success" className="border-right-0 border-top-0">
+        <Card.Header className="bg-dark h5 card-header h5 border-success p-2">
+          <span className="d-flex ">
+            <p className="header-text">{headingText}</p>
+            <DropdownButton
+              as={ButtonGroup}
+              key="down"
+              id={`dropdown-button-drop-$down`}
+              drop="right"
+              variant="outline-info"
+              title="Filter"
+              className="hello-there"
+            >
+              {FILTER_NAMES.map((name) => (
+                <Dropdown.Item
+                  active={filter === name ? true : false}
+                  // className="bg-dark"
+                  eventKey={name}
+                  onClick={() => setFilter(name)}
+                >
+                  {name}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+          </span>
+        </Card.Header>
+        <ListGroup as="ul" variant="flush" className="list-group-task">
+          {data.tasks.filter(FILTER_MAP[filter]).map((task, index) => (
+            <Todo
+              key={task.id}
+              id={task.id}
+              name={task.name}
+              completed={task.isCompleted}
+              isLastItem={index === data.tasks.length - 1}
+            />
+          ))}
+        </ListGroup>
+      </Card>
     );
   }
   // if (loading) return <p>Loading</p>;
@@ -65,11 +100,15 @@ function BootstrapApp() {
   // if (!data) return <p>Not Found</p>;
 
   return (
-    <Container>
-      <h1>Haggai's Todo</h1>
-      <Form />
-      {res}
-    </Container>
+    <div class="container-wrapper">
+      <Container>
+        <h1 style={{ textAlign: "center" }} className="mb-3">
+          Haggai's Todo
+        </h1>
+        <Form />
+        {res}
+      </Container>
+    </div>
   );
 }
 

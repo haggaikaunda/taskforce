@@ -1,17 +1,37 @@
-.list-group-task .list-group-task-item {
+.list-group-task .border-bottom-color {
   border-bottom: 1px solid rgb(188, 194, 182);
-}
-
-.list-group-last-task-item {
-  border-bottom: none;
 }
 
 .todo-icons {
   margin-left: auto;
 }
 
+.header-text {
+  flex-grow: 1;
+  margin: auto;
+  text-align: center;
+}
+
+.container-wrapper {
+  width: 700px;
+  margin: 0 auto;
+}
+
+.hello-there {
+  margin-left: auto;
+}
+
+.loading-animation {
+  display: block;
+  margin: 0 auto;
+}
+
 ul {
   list-style: none;
+}
+
+p {
+  margin: auto 0;
 }
 
 .modal {

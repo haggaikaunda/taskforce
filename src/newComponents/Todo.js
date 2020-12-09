@@ -46,7 +46,7 @@ export default function Todo({ id, name, completed, isLastItem }) {
     update(cache, { data: { deleteTask } }) {
       cache.modify({
         fields: {
-          id: deleteTask.id,
+          id: deleteTask?.id,
           tasks(_, { DELETE }) {
             return DELETE;
           },
@@ -57,6 +57,7 @@ export default function Todo({ id, name, completed, isLastItem }) {
 
   const [isEditing, setEditing] = useState(false);
   const [newName, setNewName] = useState(name);
+  const [isMouseOver, setMouseOver] = useState(false);
 
   /**
    * handles name change on the editing template.
@@ -65,6 +66,14 @@ export default function Todo({ id, name, completed, isLastItem }) {
   function handleChange(e) {
     setNewName(e.target.value);
   }
+
+  const _handleMouseEnter = () => {
+    setMouseOver(true);
+  };
+
+  const _handleMouseLeave = () => {
+    setMouseOver(false);
+  };
 
   /**
    * handles the submission of a new name in the editing template
@@ -76,7 +85,7 @@ export default function Todo({ id, name, completed, isLastItem }) {
     if (newName) {
       editTask({ variables: { id, name: newName } });
     }
-    setNewName("");
+    // setNewName("");
     setEditing(false);
   }
 
@@ -119,55 +128,37 @@ export default function Todo({ id, name, completed, isLastItem }) {
         </Button>
       </Modal.Footer>
     </Modal>
-    // <form className="stack-small" onSubmit={handleSubmit}>
-    //   <div className="form-group">
-    //     <label className="todo-label" htmlFor={id}>
-    //       New name for {name}
-    //     </label>
-    //     <input
-    //       id={id}
-    //       className="todo-text"
-    //       type="text"
-    //       value={newName}
-    //       onChange={handleChange}
-    //     />
-    //   </div>
-    //   <div className="btn-group">
-    //     <button
-    //       type="button"
-    //       className="btn todo-cancel"
-    //       onClick={() => setEditing(false)}
-    //     >
-    //       Cancel
-    //       <span className="visually-hidden">renaming {name}</span>
-    //     </button>
-    //     <button type="submit" className="btn btn__primary todo-edit">
-    //       Save
-    //       <span className="visually-hidden">new name for {name}</span>
-    //     </button>
-    //   </div>
-    // </form>
   );
-  const itemStyle = isLastItem
-    ? "list-group-last-task-item"
-    : "list-group-task-item";
+  const itemStyle = isLastItem ? "border-0" : "border-bottom-color";
   const _viewTemplate = () => (
-    <ListGroup.Item className={`d-flex p-1 bg-dark ${itemStyle}`}>
+    <ListGroup.Item
+      onMouseEnter={_handleMouseEnter}
+      onMouseLeave={_handleMouseLeave}
+      className={`d-flex p-1 bg-dark ${itemStyle}`}
+    >
       <Form className="p-2">
-        <Form.Check type="checkbox" />
+        <Form.Check
+          type="checkbox"
+          defaultChecked={completed}
+          onChange={() =>
+            toggleTaskCompleted({ variables: { id, isCompleted: !completed } })
+          }
+        />
       </Form>
       <p>{name}</p>
-      <ButtonGroup className="p-0 todo-icons" aria-label="Basic example">
-        <Button variant="secondary" onClick={() => setEditing(true)}>
-          <BsPencilSquare />
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={() => deleteTask({ variables: { id } })}
-        >
-          <BsTrash />
-        </Button>
-      </ButtonGroup>
+      {isMouseOver ? (
+        <ButtonGroup className="p-0 todo-icons" aria-label="Basic example">
+          <Button variant="outline-info" onClick={() => setEditing(true)}>
+            <BsPencilSquare />
+          </Button>
+          <Button
+            variant="outline-info"
+            onClick={() => deleteTask({ variables: { id } })}
+          >
+            <BsTrash />
+          </Button>
+        </ButtonGroup>
+      ) : null}
     </ListGroup.Item>
 
     // <div className="stack-small">

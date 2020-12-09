@@ -17,7 +17,7 @@ const ADD_TASK = gql`
 `;
 
 export default function FormData() {
-  const [addTask, { loading, error }] = useMutation(ADD_TASK, {
+  const [addTask, { loading }] = useMutation(ADD_TASK, {
     // cache update funtion so that our global todo list is updated too.
     update(cache, { data: { createTask } }) {
       cache.modify({
@@ -40,6 +40,7 @@ export default function FormData() {
       });
     },
   });
+
   // used to update the name in the UI as a use types.
   const [name, setName] = useState("");
 
@@ -48,29 +49,26 @@ export default function FormData() {
   }
 
   function handleSubmit(e) {
-    // e.preventDefault();
+    e.preventDefault();
     if (name) {
       // pass the argument as a variable to the gql query.
       addTask({ variables: { name } }).then((res) => setName(""));
     }
   }
 
-  // if (loading) return <p>Loading</p>;
-  // if (error) return <p>error: ${error.message}</p>;
-
   return (
-    <InputGroup as="form" size="lg" className="mb-3" onSubmit={handleSubmit}>
+    <InputGroup as="form" size="lg" className="mb-3 " onSubmit={handleSubmit}>
       <FormControl
         placeholder={loading ? "Saving" : "What needs to be done?"}
         // aria-label="Add a task"
         // aria-describedby="basic-addon2"
-        className="bg-dark"
+        className="bg-dark border-top-0 border-left-0 border-success"
         onChange={handleChange}
         value={name}
         style={{ color: "white" }}
       />
       <InputGroup.Append>
-        <Button variant="secondary" onClick={handleSubmit}>
+        <Button variant="success" onClick={handleSubmit}>
           Add
         </Button>
       </InputGroup.Append>
