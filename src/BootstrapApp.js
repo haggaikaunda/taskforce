@@ -55,8 +55,8 @@ function BootstrapApp() {
     const tasksNoun = activeTasks.length !== 1 ? "tasks" : "task";
     const headingText = `${activeTasks.length} ${tasksNoun} remaining`;
     res = (
-      <Card border="success" className="border-right-0 border-top-0">
-        <Card.Header className="bg-dark h5 card-header h5 border-success p-2">
+      <Card border="success">
+        <Card.Header className="bg-dark h5 card-header p-2">
           <span className="d-flex ">
             <p className="header-text">{headingText}</p>
             <DropdownButton
@@ -66,12 +66,10 @@ function BootstrapApp() {
               drop="right"
               variant="outline-info"
               title="Filter"
-              className="hello-there"
             >
               {FILTER_NAMES.map((name) => (
                 <Dropdown.Item
                   active={filter === name ? true : false}
-                  // className="bg-dark"
                   eventKey={name}
                   onClick={() => setFilter(name)}
                 >
@@ -95,9 +93,6 @@ function BootstrapApp() {
       </Card>
     );
   }
-  // if (loading) return <p>Loading</p>;
-  // if (error) return <p>ERROR: {error}</p>;
-  // if (!data) return <p>Not Found</p>;
 
   return (
     <div class="container-wrapper">
