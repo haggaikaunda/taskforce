@@ -1,0 +1,10 @@
+runtime: nodejs14
+
+env_variables:
+  MONGO_ACCESS_TOKEN: "admin:e8a92@9knM@cluster0-pxd2k.mongodb.net/graphql"
+
+handlers:
+  - url: /.*
+    secure: always
+    redirect_http_response_code: 301
+    script: auto
