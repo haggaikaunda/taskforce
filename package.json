@@ -6,7 +6,7 @@
   "author": "hkaunda",
   "license": "MIT",
   "engines": {
-    "yarn": "1.x"
+    "node": "14.x"
   },
   "scripts": {
     "start": "node src/index.js",
