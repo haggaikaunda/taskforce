@@ -1,0 +1,43 @@
+.list-group-task .border-bottom-color {
+  border-bottom: 1px solid rgb(139, 156, 121);
+}
+
+.todo-icons {
+  margin-left: auto;
+}
+
+.header-text {
+  flex-grow: 1;
+  margin: auto;
+  text-align: center;
+}
+
+.container-wrapper {
+  margin: 0 auto; /* horizontally center*/
+}
+
+/* This is the md breakpoint in bootstrap, make it the largest
+   container size */
+@media (min-width: 768px) {
+  .container-wrapper {
+    width: 768px;
+  }
+}
+
+.loading-animation {
+  display: block;
+  margin: 0 auto; /* horizontally center the loading animation*/
+}
+
+ul {
+  list-style: none;
+}
+
+p {
+  margin: auto 0;
+}
+
+.modal {
+  margin-top: 200px;
+  height: 300px;
+}
