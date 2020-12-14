@@ -8,8 +8,8 @@ const Tasks = require("./datasources/tasks");
 const Notes = require("./datasources/notes");
 const resolvers = require("./schema/resolvers");
 
-const MongoToken = process.env.MONGO_ACCESS_TOKEN;
-const mongoUri = `mongodb+srv://${MongoToken}?retryWrites=true&w=majority`;
+const MONGO_URI = process.env.MONGO_URI;
+const mongoUri = `${MONGO_URI}?retryWrites=true&w=majority`;
 
 mongo.connect(mongoUri, {
   useNewUrlParser: true,
