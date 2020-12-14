@@ -6,7 +6,7 @@ import BootstrapApp from "./BootstrapApp";
 
 const client = new ApolloClient({
   cache,
-  uri: "https://hkaunda-todo.herokuapp.com/",
+  uri: "https://api.hkaunda.com",
 });
 document.body.style = "background: rgb(50, 50, 50); color: white";
 ReactDOM.render(
