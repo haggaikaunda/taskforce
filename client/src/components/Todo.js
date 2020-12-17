@@ -13,6 +13,8 @@ import {
 } from "react-bootstrap";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
+import Notes from "./Notes"
+
 const TOGGLE_TASK_COMPLETED = gql`
   mutation ToggleTaskCompletion($id: ID!, $isCompleted: Boolean!) {
     editTask(id: $id, isCompleted: $isCompleted) {
@@ -40,7 +42,7 @@ const EDIT_TASK = gql`
   }
 `;
 
-export default function Todo({ id, name, completed, isLastItem, position }) {
+export default function Todo({ id, name, completed, notes, isLastItem, position }) {
   // Apollo will automatically udate the global cache for single value changes.
   const [toggleTaskCompleted] = useMutation(TOGGLE_TASK_COMPLETED);
   const [editTask] = useMutation(EDIT_TASK);
@@ -147,8 +149,8 @@ export default function Todo({ id, name, completed, isLastItem, position }) {
     )
 
     return (
-      <Card as="li" className="border-0" bg="primary">
-        <Accordion.Toggle as={Card.Header} className="p-0 bg-dark" eventKey={`${position}`}>
+      <Card as="li" className="border-0" bg="dark">
+        <Accordion.Toggle as={Card.Header} className="p-0 bg-dark" eventKey={`${id}`}>
           <ListGroup.Item
             onMouseEnter={_handleMouseEnter}
             onMouseLeave={_handleMouseLeave}
@@ -167,8 +169,10 @@ export default function Todo({ id, name, completed, isLastItem, position }) {
           {isMouseOver ? todoIcons : null}
           </ListGroup.Item>
         </Accordion.Toggle>
-        <Accordion.Collapse eventKey={`${position}`}>
-          <Card.Body>Hello! I'm task detail page #{position + 1} - do you like me?</Card.Body>
+        <Accordion.Collapse eventKey={`${id}`}>
+          <Card.Body bg="dark" className="pl-4 pr-4 p-0">
+            <Notes task_id={id} notes={notes} position={position}/>
+          </Card.Body>
         </Accordion.Collapse>
       </Card>
     )

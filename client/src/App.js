@@ -85,6 +85,7 @@ function BootstrapApp() {
               id={task.id}
               name={task.name}
               completed={task.isCompleted}
+              notes={task.notes}
               isLastItem={index === data.tasks.length - 1}
               position={index}
             />
