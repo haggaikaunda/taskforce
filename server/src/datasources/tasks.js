@@ -1,7 +1,7 @@
 const { MongoDataSource } = require("apollo-datasource-mongodb");
 
 class Task extends MongoDataSource {
-  getTask(taskId) {
+  getTask({taskId}) {
     return this.findOneById(taskId);
   }
 
@@ -38,7 +38,7 @@ class Task extends MongoDataSource {
         { $push: { notes: noteId } },
         { new: true }
       );
-      console.log("updatedTask", updatedTask);
+      
       return { success: true, task: updatedTask };
     } catch (err) {
       return { success: false, message: err.message };
