@@ -3,8 +3,8 @@ import "./boot.css";
 import React, { useState } from "react";
 import Todo from "./components/Todo";
 import Form from "./components/Form";
-import ListGroup from "react-bootstrap/ListGroup";
 
+import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
@@ -54,8 +54,8 @@ function BootstrapApp() {
     const tasksNoun = activeTasks.length !== 1 ? "tasks" : "task";
     const headingText = `${activeTasks.length} ${tasksNoun} remaining`;
     res = (
-      <Card border="success">
-        <Card.Header className="bg-dark h5 card-header p-2">
+      <Card border="success" bg="dark">
+        <Card.Header className="h5 p-2 border-success border-bottom">
           <span className="d-flex ">
             <p className="header-text">{headingText}</p>
             <DropdownButton
@@ -78,7 +78,7 @@ function BootstrapApp() {
             </DropdownButton>
           </span>
         </Card.Header>
-        <ListGroup as="ul" variant="flush" className="list-group-task">
+        <Accordion as="ul" variant="flush" className="pl-0 mb-0 list-group-task">
           {data.tasks.filter(FILTER_MAP[filter]).map((task, index) => (
             <Todo
               key={task.id}
@@ -86,9 +86,10 @@ function BootstrapApp() {
               name={task.name}
               completed={task.isCompleted}
               isLastItem={index === data.tasks.length - 1}
+              position={index}
             />
           ))}
-        </ListGroup>
+        </Accordion>
       </Card>
     );
   }

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import {
+  Accordion,
   Button,
   ButtonGroup,
+  Card,
   Form,
   FormControl,
   InputGroup,
@@ -38,7 +40,7 @@ const EDIT_TASK = gql`
   }
 `;
 
-export default function Todo({ id, name, completed, isLastItem }) {
+export default function Todo({ id, name, completed, isLastItem, position }) {
   // Apollo will automatically udate the global cache for single value changes.
   const [toggleTaskCompleted] = useMutation(TOGGLE_TASK_COMPLETED);
   const [editTask] = useMutation(EDIT_TASK);
@@ -129,39 +131,50 @@ export default function Todo({ id, name, completed, isLastItem }) {
     </Modal>
   );
   const itemStyle = isLastItem ? "border-0" : "border-bottom-color";
-  const _viewTemplate = () => (
-    <ListGroup.Item
-      onMouseEnter={_handleMouseEnter}
-      onMouseLeave={_handleMouseLeave}
-      className={`d-flex p-1 bg-dark ${itemStyle}`}
-    >
-      <Form className="p-2">
-        <Form.Check
-          type="checkbox"
-          defaultChecked={completed}
-          onChange={() =>
-            toggleTaskCompleted({ variables: { id, isCompleted: !completed } })
-          }
-        />
-      </Form>
-      <p>{name}</p>
-      {isMouseOver ? (
-        <ButtonGroup className="p-0 todo-icons" aria-label="Basic example">
-          <Button variant="outline-info" onClick={() => setEditing(true)}>
-            <BsPencilSquare />
-          </Button>
-          <Button
-            variant="outline-info"
-            onClick={() => deleteTask({ variables: { id } })}
+  const _viewTemplate = () => {
+    const todoIcons = (
+      <ButtonGroup className="p-0 todo-icons" aria-label="Basic example">
+        <Button variant="outline-info" onClick={() => setEditing(true)}>
+          <BsPencilSquare />
+        </Button>
+        <Button
+          variant="outline-info"
+          onClick={() => deleteTask({ variables: { id } })}
+        >
+          <BsTrash />
+        </Button>
+      </ButtonGroup>
+    )
+
+    return (
+      <Card as="li" className="border-0" bg="primary">
+        <Accordion.Toggle as={Card.Header} className="p-0 bg-dark" eventKey={`${position}`}>
+          <ListGroup.Item
+            onMouseEnter={_handleMouseEnter}
+            onMouseLeave={_handleMouseLeave}
+            className={`d-flex p-1 bg-dark ${itemStyle}`}
           >
-            <BsTrash />
-          </Button>
-        </ButtonGroup>
-      ) : null}
-    </ListGroup.Item>
-  );
+          <Form className="p-2">
+            <Form.Check
+              type="checkbox"
+              defaultChecked={completed}
+              onChange={() =>
+                toggleTaskCompleted({ variables: { id, isCompleted: !completed } })
+              }
+            />
+          </Form>
+          <p>{name}</p>
+          {isMouseOver ? todoIcons : null}
+          </ListGroup.Item>
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey={`${position}`}>
+          <Card.Body>Hello! I'm task detail page #{position + 1} - do you like me?</Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    )
+  }
 
   return (
-    <li className="todo">{isEditing ? _editingTemplate() : _viewTemplate()}</li>
+    isEditing ? _editingTemplate() : _viewTemplate()
   );
 }
