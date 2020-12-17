@@ -85,7 +85,6 @@ export default function Todo({ id, name, completed, isLastItem }) {
     if (newName) {
       editTask({ variables: { id, name: newName } });
     }
-    // setNewName("");
     setEditing(false);
   }
 
@@ -160,34 +159,6 @@ export default function Todo({ id, name, completed, isLastItem }) {
         </ButtonGroup>
       ) : null}
     </ListGroup.Item>
-
-    // <div className="stack-small">
-    //   <div className="c-cb">
-    //     <input
-    //       id={id}
-    //       type="checkbox"
-    //       defaultChecked={completed}
-    //       onChange={() =>
-    //         toggleTaskCompleted({ variables: { id, isCompleted: !completed } })
-    //       }
-    //     />
-    //     <label className="todo-label" htmlFor={id}>
-    //       {name}
-    //     </label>
-    //   </div>
-    //   <div className="btn-group">
-    //     <button type="button" className="btn" onClick={() => setEditing(true)}>
-    //       Edit <span className="visually-hidden">{name}</span>
-    //     </button>
-    //     <button
-    //       type="button"
-    //       className="btn btn__danger"
-    //       onClick={() => deleteTask({ variables: { id } })}
-    //     >
-    //       Delete <span className="visually-hidden">{name}</span>
-    //     </button>
-    //   </div>
-    // </div>
   );
 
   return (

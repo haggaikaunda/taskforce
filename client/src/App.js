@@ -1,9 +1,8 @@
 import "./boot.css";
 
 import React, { useState } from "react";
-import Todo from "./newComponents/Todo";
-import Form from "./newComponents/Form";
-// import FilterButton from "./components/FilterButton";
+import Todo from "./components/Todo";
+import Form from "./components/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 
 import Card from "react-bootstrap/Card";

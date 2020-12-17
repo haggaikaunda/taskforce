@@ -2,7 +2,7 @@ import { ApolloClient, ApolloProvider } from "@apollo/client";
 import { cache } from "./cache";
 import React from "react";
 import ReactDOM from "react-dom";
-import BootstrapApp from "./BootstrapApp";
+import App from "./App";
 
 const client = new ApolloClient({
   cache,
@@ -11,7 +11,7 @@ const client = new ApolloClient({
 document.body.style = "background: rgb(50, 50, 50); color: white";
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <BootstrapApp />
+    <App />
   </ApolloProvider>,
   document.getElementById("root")
 );
