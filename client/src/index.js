@@ -6,9 +6,10 @@ import App from "./App";
 
 const client = new ApolloClient({
   cache,
-  uri: "https://api.hkaunda.com",
+  uri: "http://192.168.0.103:4000",
 });
-document.body.style = "background: rgb(50, 50, 50); color: white";
+// https://coolors.co/343a40 for color pallete: bg-dark is #343A40
+document.body.style = "background: #1E2225; color: white";
 ReactDOM.render(
   <ApolloProvider client={client}>
     <App />

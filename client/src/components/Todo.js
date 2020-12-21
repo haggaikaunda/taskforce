@@ -91,38 +91,51 @@ export default function Todo({ id, name, completed, notes, isLastItem, position 
     }
     setEditing(false);
   }
-
   const _editingTemplate = () => (
     <Modal
       show={isEditing}
+      scrollable
       onHide={() => setEditing(false)}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      dialogClassName="bg-dark"
     >
-      <Modal.Header closeButton className="bg-dark">
-        <Modal.Title id="contained-modal-title-vcenter">Edit</Modal.Title>
+      <Modal.Header closeButton className="bg-dark border-success">
+        <h4 id="contained-modal-title-vcenter">{name}</h4>
       </Modal.Header>
-      <Modal.Body className="bg-dark">
-        <InputGroup
-          as="form"
-          size="lg"
-          className="mb-3"
-          onSubmit={handleSubmit}
-        >
-          <FormControl
-            placeholder="What needs to be done?"
-            // aria-label="Add a task"
-            // aria-describedby="basic-addon2"
-            className="bg-dark"
-            onChange={handleChange}
-            value={newName}
-            style={{ color: "white" }}
-          />
-        </InputGroup>
+      <Modal.Body className="bg-dark border-success">
+        <h5 style={{ textAlign: "center" }}>Comments</h5>
+        <Card bg="dark">
+          <Card.Body>
+            <Card.Subtitle>21.12.2020</Card.Subtitle>
+            <Card.Body>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into...</p>
+            </Card.Body>
+          </Card.Body>
+        </Card>
+        <br />
+        <Card bg="dark">
+          <Card.Body>
+            <Card.Subtitle>21.12.2020</Card.Subtitle>
+            <Card.Body>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into...</p>
+            </Card.Body>
+          </Card.Body>
+        </Card>
+        <br />
+        <Card bg="dark">
+          <Card.Body>
+            <Card.Subtitle>21.12.2020</Card.Subtitle>
+            <Card.Body>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into...</p>
+            </Card.Body>
+          </Card.Body>
+        </Card>
+        {/* <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <br />
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> */}
       </Modal.Body>
-      <Modal.Footer className="bg-dark">
+      <Modal.Footer className="bg-dark border-success">
         <Button variant="secondary" onClick={() => setEditing(false)}>
           Cancel
         </Button>
@@ -131,9 +144,50 @@ export default function Todo({ id, name, completed, notes, isLastItem, position 
         </Button>
       </Modal.Footer>
     </Modal>
+
+  // const _editingTemplate = () => (
+  //   <Modal
+  //     show={isEditing}
+  //     onHide={() => setEditing(false)}
+  //     size="lg"
+  //     aria-labelledby="contained-modal-title-vcenter"
+  //     centered
+  //     dialogClassName="bg-dark"
+  //   >
+  //     <Modal.Header closeButton className="bg-dark">
+  //       <Modal.Title id="contained-modal-title-vcenter">Edit</Modal.Title>
+  //     </Modal.Header>
+  //     <Modal.Body className="bg-dark">
+  //       <InputGroup
+  //         as="form"
+  //         size="lg"
+  //         className="mb-3"
+  //         onSubmit={handleSubmit}
+  //       >
+  //         <FormControl
+  //           placeholder="What needs to be done?"
+  //           // aria-label="Add a task"
+  //           // aria-describedby="basic-addon2"
+  //           className="bg-dark"
+  //           onChange={handleChange}
+  //           value={newName}
+  //           style={{ color: "white" }}
+  //         />
+  //       </InputGroup>
+  //     </Modal.Body>
+  //     <Modal.Footer className="bg-dark">
+  //       <Button variant="secondary" onClick={() => setEditing(false)}>
+  //         Cancel
+  //       </Button>
+  //       <Button variant="success" onClick={handleSubmit}>
+  //         Save changes
+  //       </Button>
+  //     </Modal.Footer>
+  //   </Modal>
   );
-  const itemStyle = isLastItem ? "border-0" : "border-bottom-color";
+  
   const _viewTemplate = () => {
+    const itemStyle = isLastItem ? "border-0" : "border-bottom-color";
     const todoIcons = (
       <ButtonGroup className="p-0 todo-icons" aria-label="Basic example">
         <Button variant="outline-info" onClick={() => setEditing(true)}>
@@ -170,7 +224,7 @@ export default function Todo({ id, name, completed, notes, isLastItem, position 
           </ListGroup.Item>
         </Accordion.Toggle>
         <Accordion.Collapse eventKey={`${id}`}>
-          <Card.Body bg="dark" className="pl-4 pr-4 p-0">
+          <Card.Body className="pl-4 pr-1 p-0">
             <Notes task_id={id} notes={notes} position={position}/>
           </Card.Body>
         </Accordion.Collapse>

@@ -9,9 +9,10 @@ export default function Notes({task_id, notes, position}) {
           notes.map(note => (
             <ListGroup.Item
               key={note.id}
-              variant="dark"
+              variant="info"
+              className="list-group-notes"
             >
-              {note.description}
+              <p>{note.description}</p>
             </ListGroup.Item>
             
           ))

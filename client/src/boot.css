@@ -1,5 +1,16 @@
 .list-group-task .border-bottom-color {
   border-bottom: 1px solid rgb(139, 156, 121);
+  /* border-top: 1px solid rgb(139, 156, 121); */
+}
+
+.border-bottom-color + .border-bottom-color {
+  border-bottom: 0
+}
+
+.list-group-notes {
+  background-color: #414950;
+  border-bottom: 1px solid rgb(139, 156, 121);
+  color: #EDEDED;
 }
 
 .todo-icons {
@@ -14,6 +25,10 @@
 
 .container-wrapper {
   margin: 0 auto; /* horizontally center*/
+}
+
+.bg-dark {
+  background-color: #fff;
 }
 
 /* This is the md breakpoint in bootstrap, make it the largest
@@ -37,7 +52,7 @@ p {
   margin: auto 0;
 }
 
-.modal {
+/* .modal {
   margin-top: 200px;
   height: 300px;
-}
+} */
