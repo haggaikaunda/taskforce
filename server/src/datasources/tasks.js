@@ -14,6 +14,7 @@ class Task extends MongoDataSource {
       const task = await this.model.create({
         name: name,
         isCompleted: isCompleted,
+        createdAt: Date.now()
       });
       return { success: true, task: task };
     } catch (err) {
@@ -76,6 +77,12 @@ class Task extends MongoDataSource {
     } catch (err) {
       console.log("error updating task", err);
     }
+  }
+
+  createdAt(id) {
+    const {Schema: {Type: {ObjectId}}} = require("mongoose");
+    ObjectId(id).getTimestamp()
+
   }
 }
 

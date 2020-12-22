@@ -22,9 +22,14 @@ class Note extends MongoDataSource {
     return true;
   }
 
-  async createNote(taskId, description) {
+  async createNote(taskId, description, as) {
     try {
-      const note = await this.model.create({ description, task: taskId });
+      const note = await this.model.create({
+        description,
+        noteType: as,
+        task: taskId,
+        createdAt: Date.now()
+      });
       return { success: true, id: note._id };
     } catch (err) {
       return { success: false, message: err.message };

@@ -17,10 +17,10 @@ module.exports = {
 
     createNote: async (
       _,
-      { taskId, description },
+      { taskId, description, as },
       { dataSources: { notes, tasks } }
     ) => {
-      const noteCreateResult = await notes.createNote(taskId, description);
+      const noteCreateResult = await notes.createNote(taskId, description, as);
       if (noteCreateResult.success) {
         // add this note to the corresponding task.
         await tasks.addNoteToTask({

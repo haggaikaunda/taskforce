@@ -7,12 +7,20 @@ const typeDefs = gql`
     name: String!
     notes: [Note]!
     isCompleted: Boolean!
+    createdAt: String
   }
 
   type Note {
     id: ID!
     description: String!
     task: Task
+    noteType: NoteType
+    createdAt: String
+  }
+
+  enum NoteType {
+    COMMENT
+    SUBTASK
   }
 
   type Query {
@@ -27,7 +35,7 @@ const typeDefs = gql`
     deleteNote(id: ID): Boolean!
     deleteAllNotes: Boolean!
     editTask(id: ID, name: String, isCompleted: Boolean): Task
-    createNote(taskId: ID!, description: String!): NoteUpdateResponse
+    createNote(taskId: ID!, description: String!, as: NoteType = "SUBTASK"): NoteUpdateResponse
     addNoteToTask(taskId: ID!, noteId: ID!): TaskUpdateResponse!
   }
 

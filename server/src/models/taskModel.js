@@ -9,6 +9,9 @@ const TaskSchema = new mongo.Schema({
     type: Boolean,
     required: true,
   },
+  createdAt: {
+    type: String
+  },
   notes: {
     type: [mongo.Schema.Types.ObjectId],
     ref: "Note",

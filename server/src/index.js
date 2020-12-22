@@ -8,7 +8,16 @@ const Tasks = require("./datasources/tasks");
 const Notes = require("./datasources/notes");
 const resolvers = require("./schema/resolvers");
 
-const MONGO_URI = process.env.MONGO_URI;
+let MONGO_URI
+MONGO_URI = process.env.MONGO_URI;
+
+// TODO: Find a better way to do this.
+if (!MONGO_URI) {
+  const dotenv = require("dotenv")
+  dotenv.config()
+  MONGO_URI = process.env.MONGO_URI
+}
+
 const mongoUri = `${MONGO_URI}?retryWrites=true&w=majority`;
 
 mongo.connect(mongoUri, {
