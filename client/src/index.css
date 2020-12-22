@@ -27,9 +27,6 @@
   margin: 0 auto; /* horizontally center*/
 }
 
-.bg-dark {
-  background-color: #fff;
-}
 
 /* This is the md breakpoint in bootstrap, make it the largest
    container size */

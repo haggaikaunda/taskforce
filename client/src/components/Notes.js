@@ -6,7 +6,7 @@ export default function Notes({task_id, notes, position}) {
   return (
       <ListGroup variant="flush">
         {
-          notes.map(note => (
+          notes.filter(note => note.noteType !== "COMMENT").map(note => (
             <ListGroup.Item
               key={note.id}
               variant="info"

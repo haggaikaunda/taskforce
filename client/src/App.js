@@ -1,4 +1,4 @@
-import "./boot.css";
+import "./index.css";
 
 import React, { useState } from "react";
 import Todo from "./components/Todo";
@@ -22,6 +22,8 @@ const GET_TASKS = gql`
       notes {
         id
         description
+        createdAt
+        noteType
       }
     }
   }
@@ -53,6 +55,7 @@ function BootstrapApp() {
     const activeTasks = data.tasks.filter(FILTER_MAP["Active"]);
     const tasksNoun = activeTasks.length !== 1 ? "tasks" : "task";
     const headingText = `${activeTasks.length} ${tasksNoun} remaining`;
+    
     res = (
       <Card border="success" bg="dark">
         <Card.Header className="h5 p-2 border-success border-bottom">
